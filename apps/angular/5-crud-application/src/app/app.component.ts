@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { randText } from '@ngneat/falso';
+import { Todo } from '../data/todo.model';
 
 @Component({
   standalone: true,
@@ -16,7 +17,7 @@ import { randText } from '@ngneat/falso';
   styles: [],
 })
 export class AppComponent implements OnInit {
-  todos!: any[];
+  todos!: Todo[];
 
   constructor(private http: HttpClient) {}
 
@@ -24,6 +25,7 @@ export class AppComponent implements OnInit {
     this.http
       .get<any[]>('https://jsonplaceholder.typicode.com/todos')
       .subscribe((todos) => {
+        console.log(todos[0]);
         this.todos = todos;
       });
   }
