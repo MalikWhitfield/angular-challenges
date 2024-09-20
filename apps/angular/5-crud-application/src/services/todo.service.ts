@@ -20,7 +20,6 @@ export class TodoService {
       JSON.stringify({
         todo: todo.id,
         title: randText(),
-        userId: todo.userId,
       }),
       {
         headers: {
@@ -28,5 +27,10 @@ export class TodoService {
         },
       },
     );
+  }
+
+  deleteTodo(id: number): void {
+    console.log(id);
+    this.http.delete<void>(`https://jsonplaceholder.typicode.com/todos/${id}`);
   }
 }

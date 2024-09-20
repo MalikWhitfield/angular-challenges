@@ -1,5 +1,4 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Todo } from '../data/todo.model';
 import { TodoService } from '../services/todo.service';
@@ -12,6 +11,7 @@ import { TodoService } from '../services/todo.service';
     <div *ngFor="let todo of todos">
       {{ todo.title }}
       <button (click)="update(todo)">Update</button>
+      <button (click)="delete(todo.id)">Delete</button>
     </div>
   `,
   styles: [],
@@ -20,12 +20,13 @@ import { TodoService } from '../services/todo.service';
 export class AppComponent implements OnInit {
   todos!: Todo[];
 
-  constructor(
-    private http: HttpClient,
-    private todoService: TodoService,
-  ) {}
+  constructor(private todoService: TodoService) {}
 
   ngOnInit(): void {
+    this.getTodos();
+  }
+
+  getTodos() {
     this.todoService.getTodos().subscribe((todos) => {
       this.todos = todos;
     });
@@ -35,5 +36,9 @@ export class AppComponent implements OnInit {
     this.todoService.updateTodo(todo).subscribe((todoUpdated: Todo) => {
       this.todos[todoUpdated.id - 1] = todoUpdated;
     });
+  }
+
+  delete(id: number) {
+    this.todoService.deleteTodo(id);
   }
 }
