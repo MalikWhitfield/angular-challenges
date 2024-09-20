@@ -33,7 +33,7 @@ export class AppComponent implements OnInit {
   }
 
   update(todo: Todo) {
-    this.todoService.updateTodo(todo).subscribe((todoUpdated: Todo) => {
+    this.todoService.updateTodo(todo.id).subscribe((todoUpdated: Todo) => {
       this.todos[todoUpdated.id - 1] = todoUpdated;
     });
   }
