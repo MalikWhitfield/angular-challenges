@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { randText } from '@ngneat/falso';
 import { Todo } from '../data/todo.model';
+import { TodoService } from '../services/todo.service';
 
 @Component({
   standalone: true,
@@ -15,19 +16,20 @@ import { Todo } from '../data/todo.model';
     </div>
   `,
   styles: [],
+  providers: [TodoService],
 })
 export class AppComponent implements OnInit {
   todos!: Todo[];
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private todoService: TodoService,
+  ) {}
 
   ngOnInit(): void {
-    this.http
-      .get<Todo[]>('https://jsonplaceholder.typicode.com/todos')
-      .subscribe((todos) => {
-        console.log(todos[0]);
-        this.todos = todos;
-      });
+    this.todoService.getTodos().subscribe((todos) => {
+      this.todos = todos;
+    });
   }
 
   update(todo: Todo) {
