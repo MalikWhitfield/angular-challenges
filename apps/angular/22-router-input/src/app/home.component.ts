@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -7,4 +8,6 @@ import { Component } from '@angular/core';
     <div>Home</div>
   `,
 })
-export default class HomeComponent {}
+export default class HomeComponent {
+  private activatedRoute = inject(ActivatedRoute);
+}
